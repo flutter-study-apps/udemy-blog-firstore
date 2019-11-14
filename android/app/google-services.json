@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "99850941021",
+    "firebase_url": "https://digitapps-blog.firebaseio.com",
+    "project_id": "digitapps-blog",
+    "storage_bucket": "digitapps-blog.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99850941021:android:91e559d3aa6835cbd213b4",
+        "android_client_info": {
+          "package_name": "com.digitapps.blog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99850941021-eggbjts8cncjksr9vev0hf7lrorbidck.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digitapps.blog",
+            "certificate_hash": "146ae3e693ca1f187e433f7a484b8e8a16aa80ec"
+          }
+        },
+        {
+          "client_id": "99850941021-8qgemqaeoeu6o7dsjhmeqgr1299ton69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGfqqNeLpEdab_wOUV64c4NbQE0c0upP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99850941021-8qgemqaeoeu6o7dsjhmeqgr1299ton69.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "99850941021-b7opc959ri26msm07j3ri1293f229p4l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.digitapps.blog",
+                "app_store_id": "123456"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
