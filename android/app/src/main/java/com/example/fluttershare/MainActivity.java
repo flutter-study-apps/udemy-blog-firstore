@@ -1,4 +1,4 @@
-package com.example.fluttershare;
+package com.digitapps.blog;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

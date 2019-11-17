@@ -10,54 +10,54 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
- 
   bool isAuth = false;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    googleSignIn.onCurrentUserChanged.listen((account){
+    // Detects when user signed in
+    googleSignIn.onCurrentUserChanged.listen((account) {
       handleSignIn(account);
-    }, onError: (err){
+    }, onError: (err) {
       print('Error signing in: $err');
     });
-    //Reauthenticate user when app is opened
-    googleSignIn.signInSilently(suppressErrors: false).then((account){
+    // Reauthenticate user when app is opened
+    googleSignIn.signInSilently(suppressErrors: false).then((account) {
       handleSignIn(account);
-    }).catchError((err){
+    }).catchError((err) {
       print('Error signing in: $err');
     });
   }
 
-  handleSignIn(GoogleSignInAccount account ){
-    if(account!=null){
-        print('user Signed in! ${account.displayName}');
-        setState(() {
-          isAuth = true;
-        });
-      } else{
-         setState(() {
-           isAuth = false;
-         });
-      }
+  handleSignIn(GoogleSignInAccount account) {
+    if (account != null) {
+      print('User signed in!: $account');
+      setState(() {
+        isAuth = true;
+      });
+    } else {
+      setState(() {
+        isAuth = false;
+      });
+    }
   }
 
-  login(){
+  login() {
     googleSignIn.signIn();
   }
 
-  logout(){
+  logout() {
     googleSignIn.signOut();
   }
 
-  Widget buildAuthScreen(){
+  Widget buildAuthScreen() {
     return RaisedButton(
       child: Text('Logout'),
-      onPressed: logout(),
+      onPressed: logout,
     );
   }
 
-  Scaffold buildUnAuthScreen(){
+  Scaffold buildUnAuthScreen() {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -65,51 +65,47 @@ class _HomeState extends State<Home> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Theme.of(context).primaryColor ,
               Theme.of(context).accentColor,
-            ]
+              Theme.of(context).primaryColor,
+            ],
           ),
         ),
         alignment: Alignment.center,
         child: Column(
-        mainAxisAlignment: MainAxisAlignment.center ,
-        crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
-              'DigitApps  Blog',
+              'FlutterShare',
               style: TextStyle(
                 fontFamily: "Signatra",
-                fontSize: 60.0,
+                fontSize: 90.0,
                 color: Colors.white,
               ),
             ),
-            SizedBox(
-              height: 30,
-            ),
-            // to detect the gesture on the image. 
             GestureDetector(
-              onTap: login(),
+              onTap: login,
               child: Container(
-                width: 260,
-                height: 60,
+                width: 260.0,
+                height: 60.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/google_signin_button.png'),
-                    fit: BoxFit.cover
+                    image: AssetImage(
+                      'assets/images/google_signin_button.png',
+                    ),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
-            ),
-          ], 
+            )
+          ],
         ),
       ),
     );
   }
 
   @override
-  Widget build(BuildContext context){
-    return  isAuth ?  buildAuthScreen() : buildUnAuthScreen();
+  Widget build(BuildContext context) {
+    return isAuth ? buildAuthScreen() : buildUnAuthScreen();
   }
-
-
 }

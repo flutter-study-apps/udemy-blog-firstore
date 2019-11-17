@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "99850941021",
-    "firebase_url": "https://digitapps-blog.firebaseio.com",
-    "project_id": "digitapps-blog",
-    "storage_bucket": "digitapps-blog.appspot.com"
+    "project_number": "1080028468949",
+    "firebase_url": "https://udemyblog-7c7de.firebaseio.com",
+    "project_id": "udemyblog-7c7de",
+    "storage_bucket": "udemyblog-7c7de.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:99850941021:android:91e559d3aa6835cbd213b4",
+        "mobilesdk_app_id": "1:1080028468949:android:f22d89918500d37056345c",
         "android_client_info": {
           "package_name": "com.digitapps.blog"
         }
       },
       "oauth_client": [
         {
-          "client_id": "99850941021-eggbjts8cncjksr9vev0hf7lrorbidck.apps.googleusercontent.com",
+          "client_id": "1080028468949-jg69c3cajo188d8i8seksr6k17h8hdqi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.digitapps.blog",
@@ -23,29 +23,21 @@
           }
         },
         {
-          "client_id": "99850941021-8qgemqaeoeu6o7dsjhmeqgr1299ton69.apps.googleusercontent.com",
+          "client_id": "1080028468949-621teac4qg1flusv7t44iia8n1nv390k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCGfqqNeLpEdab_wOUV64c4NbQE0c0upP0"
+          "current_key": "AIzaSyDxu3xocPVDCQJRBYP0BsNuzEFuopxRpL8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "99850941021-8qgemqaeoeu6o7dsjhmeqgr1299ton69.apps.googleusercontent.com",
+              "client_id": "1080028468949-621teac4qg1flusv7t44iia8n1nv390k.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "99850941021-b7opc959ri26msm07j3ri1293f229p4l.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.digitapps.blog",
-                "app_store_id": "123456"
-              }
             }
           ]
         }
