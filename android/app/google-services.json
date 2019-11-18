@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "1080028468949",
-    "firebase_url": "https://udemyblog-7c7de.firebaseio.com",
-    "project_id": "udemyblog-7c7de",
-    "storage_bucket": "udemyblog-7c7de.appspot.com"
+    "project_number": "885612503805",
+    "firebase_url": "https://digitappsblog.firebaseio.com",
+    "project_id": "digitappsblog",
+    "storage_bucket": "digitappsblog.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1080028468949:android:f22d89918500d37056345c",
+        "mobilesdk_app_id": "1:885612503805:android:0eb4a9ae1753702856d494",
         "android_client_info": {
-          "package_name": "com.digitapps.blog"
+          "package_name": "com.digitapps.bloggingapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1080028468949-jg69c3cajo188d8i8seksr6k17h8hdqi.apps.googleusercontent.com",
+          "client_id": "885612503805-ca8b872arj342iulpdndg5fenb5jgofl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.digitapps.blog",
+            "package_name": "com.digitapps.bloggingapp",
             "certificate_hash": "146ae3e693ca1f187e433f7a484b8e8a16aa80ec"
           }
         },
         {
-          "client_id": "1080028468949-621teac4qg1flusv7t44iia8n1nv390k.apps.googleusercontent.com",
+          "client_id": "885612503805-bkd0pcmqdrurobsk92e899m1oh0ch4ti.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDxu3xocPVDCQJRBYP0BsNuzEFuopxRpL8"
+          "current_key": "AIzaSyBvvD7ssqN41A7YkZ3XZ2CwtziufXxi35E"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1080028468949-621teac4qg1flusv7t44iia8n1nv390k.apps.googleusercontent.com",
+              "client_id": "885612503805-bkd0pcmqdrurobsk92e899m1oh0ch4ti.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
