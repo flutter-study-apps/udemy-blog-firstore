@@ -32,11 +32,11 @@ class _HomeState extends State<Home> {
       print('Error signing in: $err');
     });
     // Reauthenticate user when app is opened
-    // googleSignIn.signInSilently(suppressErrors: false).then((account) {
-    //   handleSignIn(account);
-    // }).catchError((err) {
-    //   print('Error signing in: $err');
-    // });
+    googleSignIn.signInSilently(suppressErrors: false).then((account) {
+      handleSignIn(account);
+    }).catchError((err) {
+      print('Error signing in: $err');
+    });
   }
 
   @override
@@ -74,8 +74,10 @@ class _HomeState extends State<Home> {
 
   //changing the page in pageview
   onTap(int pageIndex){
-    pageController.jumpToPage(
+    pageController.animateToPage(
       pageIndex,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.bounceInOut,
     );
   }
 

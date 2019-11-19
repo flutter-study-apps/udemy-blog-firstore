@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "885612503805-m9jfqp4v2slknbpjq1ilugp2qp8rg7al.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.digitapps.bloggingapp",
-            "certificate_hash": "a0c07bc6ad163f5fc5e4e7baf152743980974eb4"
-          }
-        },
-        {
           "client_id": "885612503805-ca8b872arj342iulpdndg5fenb5jgofl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
