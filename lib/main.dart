@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'FlutterShare',
+      title: 'ByaHero',
       debugShowCheckedModeBanner: false,
       home: Home(),
       theme: ThemeData(
