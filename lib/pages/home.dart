@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttershare/pages/activity_feed.dart';
+import 'package:fluttershare/pages/map_route.dart';
 import 'package:fluttershare/pages/profile.dart';
 import 'package:fluttershare/pages/search.dart';
 import 'package:fluttershare/pages/timeline.dart';
@@ -86,6 +87,7 @@ class _HomeState extends State<Home> {
       body: PageView(
        children: <Widget>[
          Timeline(),
+         Maproute(),
          ActivityFeed(),
          Upload(),
          Search(),
@@ -101,6 +103,7 @@ class _HomeState extends State<Home> {
         activeColor: Theme.of(context).primaryColor,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.whatshot),),
+          BottomNavigationBarItem(icon: Icon(Icons.pin_drop),),
           BottomNavigationBarItem(icon: Icon(Icons.notifications_active),),
           BottomNavigationBarItem(icon: Icon(Icons.photo_camera,size: 35.0,),),
           BottomNavigationBarItem(icon: Icon(Icons.search),),
