@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttershare/pages/activity_feed.dart';
+import 'package:fluttershare/pages/create_account.dart';
 import 'package:fluttershare/pages/profile.dart';
 import 'package:fluttershare/pages/search.dart';
 import 'package:fluttershare/pages/timeline.dart';
@@ -8,6 +10,8 @@ import 'package:fluttershare/pages/upload.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
+final usersRef = Firestore.instance.collection('users');
+final DateTime timestamp = DateTime.now();
 
 class Home extends StatefulWidget {
   @override
@@ -22,9 +26,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    pageController = PageController(
-      initialPage: 2,
-    );
+    pageController = PageController();
     // Detects when user signed in
     googleSignIn.onCurrentUserChanged.listen((account) {
       handleSignIn(account);
@@ -39,15 +41,9 @@ class _HomeState extends State<Home> {
     // });
   }
 
-  @override
-  void dispose(){
-    super.dispose();
-    pageController.dispose(); 
-  }
-
   handleSignIn(GoogleSignInAccount account) {
     if (account != null) {
-      print('User signed in!: $account');
+      createUserInFirestore();
       setState(() {
         isAuth = true;
       });
@@ -58,6 +54,35 @@ class _HomeState extends State<Home> {
     }
   }
 
+  createUserInFirestore() async {
+    // 1) check if user exists in users collection in database (according to their id)
+    final GoogleSignInAccount user = googleSignIn.currentUser;
+    final DocumentSnapshot doc = await usersRef.document(user.id).get();
+
+    if (!doc.exists) {
+      // 2) if the user doesn't exist, then we want to take them to the create account page
+      final username = await Navigator.push(
+          context, MaterialPageRoute(builder: (context) => CreateAccount()));
+
+      // 3) get username from create account, use it to make new user document in users collection
+      usersRef.document(user.id).setData({
+        "id": user.id,
+        "username": username,
+        "photoUrl": user.photoUrl,
+        "email": user.email,
+        "displayName": user.displayName,
+        "bio": "",
+        "timestamp": timestamp
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
   login() {
     googleSignIn.signIn();
   }
@@ -66,48 +91,59 @@ class _HomeState extends State<Home> {
     googleSignIn.signOut();
   }
 
-  onPageChanged(int pageIndex){
+  onPageChanged(int pageIndex) {
     setState(() {
-      this.pageIndex = pageIndex; 
+      this.pageIndex = pageIndex;
     });
   }
 
-  //changing the page in pageview
-  onTap(int pageIndex){
+  onTap(int pageIndex) {
     pageController.animateToPage(
       pageIndex,
       duration: Duration(milliseconds: 300),
-      curve: Curves.bounceInOut,
+      curve: Curves.easeInOut,
     );
   }
 
   Scaffold buildAuthScreen() {
     return Scaffold(
       body: PageView(
-       children: <Widget>[
-         Timeline(),
-         ActivityFeed(),
-         Upload(),
-         Search(),
-         Profile(),
-       ],
-       controller: pageController, 
-       onPageChanged: onPageChanged(pageIndex),
-       physics: NeverScrollableScrollPhysics(),
+        children: <Widget>[
+          // Timeline(),
+          RaisedButton(
+            child: Text('Logout'),
+            onPressed: logout,
+          ),
+          ActivityFeed(),
+          Upload(),
+          Search(),
+          Profile(),
+        ],
+        controller: pageController,
+        onPageChanged: onPageChanged,
+        physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: CupertinoTabBar(
-        currentIndex: pageIndex,
-        onTap: onTap,
-        activeColor: Theme.of(context).primaryColor,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.whatshot),),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications_active),),
-          BottomNavigationBarItem(icon: Icon(Icons.photo_camera,size: 35.0,),),
-          BottomNavigationBarItem(icon: Icon(Icons.search),),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle),),
-        ],
-      ),
+          currentIndex: pageIndex,
+          onTap: onTap,
+          activeColor: Theme.of(context).primaryColor,
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.whatshot)),
+            BottomNavigationBarItem(icon: Icon(Icons.notifications_active)),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.photo_camera,
+                size: 35.0,
+              ),
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.search)),
+            BottomNavigationBarItem(icon: Icon(Icons.account_circle)),
+          ]),
     );
+    // return RaisedButton(
+    //   child: Text('Logout'),
+    //   onPressed: logout,
+    // );
   }
 
   Scaffold buildUnAuthScreen() {
