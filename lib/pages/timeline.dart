@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttershare/widgets/header.dart';
 import 'package:fluttershare/widgets/progress.dart';
 
-
 final usersRef = Firestore.instance.collection('users');
 
 class Timeline extends StatefulWidget {
@@ -12,89 +11,72 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
+  List<dynamic> users = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getUsers();
-    // getUserById();
-  
+    // createUser();
+    // updateUser();
+    deleteUser();
   }
 
-  // getUsers() async{
-  //   final QuerySnapshot snapshot = await usersRef.where("isAdmin", isEqualTo: true).getDocuments();
-  //   snapshot.documents.forEach((doc){
-  //     print(doc.data);
-  //   });
-  // }
+  createUser() async {
+    usersRef.document("fdfdfd").setData({
+      "username": "Jeff",
+      "postCount": 3,
+      "isAdmin": false,
+    });
+  }
 
+  updateUser() async{
+    final DocumentSnapshot doc = await usersRef.document("fdfdfd").get();
 
-  // getUsers() async{
-  //   final QuerySnapshot snapshot = await usersRef
-  //     .where("postCount",isLessThan: 6)
-  //     .where("username", isEqualTo: "Alex")
-  //     .getDocuments();
-
-  //     snapshot.documents.forEach((DocumentSnapshot doc){
-  //       print(doc.data);
-  //     });
-  // }
-  getUsers() async{
-    final QuerySnapshot snapshot = await usersRef
-      .limit(2)
-      .getDocuments();
-
-      snapshot.documents.forEach((DocumentSnapshot doc){
-        print(doc.data);
+    if (doc.exists){
+      doc.reference.updateData({
+        "username": "Janjeff",
+        "postCount": 8,
+        "isAdmin": false,
       });
+    }
   }
 
-  // getUsers() async{
-  //   final QuerySnapshot snapshot = 
-  //   await usersRef.where("postCount", isGreaterThan: 2)
-  //   .getDocuments();
+  deleteUser()async{ 
+    final doc = await usersRef.document("fdfdfd").get();
 
-  //   snapshot.documents.forEach((DocumentSnapshot doc){
-  //     print(doc.data); 
-  //   });
-  // }
+  if (doc.exists){
+    usersRef.document("fdfdfd").delete();
+  }
 
-
-
-  // getUserById(){
-  //   final String  id= 'ftOdrqBpYYXv5VXS9O6d';
-  //   usersRef.document(id).get().then((DocumentSnapshot doc){
-  //      print(doc.data);
-  //       print(doc.documentID);
-  //       print(doc.exists);
-  //   });
-  // }
-
-  // getUserById() async{
-  //   final String  id= 'ftOdrqBpYYXv5VXS9O6d';
-  //   final DocumentSnapshot doc = await usersRef.document(id).get();
-  //     print(doc.data);
-  //     print(doc.documentID);
-  //     print(doc.exists);
-  // }
-
-  // getUsers(){
-  //   usersRef.getDocuments().then((QuerySnapshot snapshot){
-  //     snapshot.documents.forEach(( DocumentSnapshot doc){
-        // print(doc.data);
-        // print(doc.documentID);
-        // print(doc.exists);
-  //     });
-  //   });
-  // }
+    // usersRef.document("fdfdfd").delete();
+  }
 
   @override
   Widget build(context) {
     return Scaffold(
-      appBar: header(context,isAppTitle: true),
+      appBar: header(context, isAppTitle: true),
       // body: circularProgress(),
-      body: linearProgress(),
+      // body: linearProgress(),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: usersRef.snapshots(),
+        //builder tells how are we going to display the snapshot data
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return circularProgress();
+          }
+          final List<Text> children = snapshot.data.documents
+              .map((doc) => Text(doc['username']))
+              .toList();
+          return Container(
+            child: ListView(
+              children: children,
+            ),
+          );
+
+ 
+        },
+      ),
     );
   }
 }
