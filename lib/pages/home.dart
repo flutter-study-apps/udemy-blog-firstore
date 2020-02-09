@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttershare/models/user.dart';
 import 'package:fluttershare/pages/activity_feed.dart';
 // import 'package:fluttershare/pages/map_route.dart';
 import 'package:fluttershare/pages/profile.dart';
@@ -15,6 +16,7 @@ import 'create_account.dart';
 final GoogleSignIn googleSignIn = GoogleSignIn();
 final usersRef = Firestore.instance.collection('users');
 final DateTime timestamp = DateTime.now();
+User currentuser; //we can all user data and pass to all pages
 
 class Home extends StatefulWidget {
   @override
@@ -75,7 +77,7 @@ class _HomeState extends State<Home> {
   createUserInFirestore() async {
     // 1) check if user exists in users collection in database (according to their id)
     final GoogleSignInAccount user = googleSignIn.currentUser;
-    final DocumentSnapshot doc = await usersRef.document(user.id).get();
+    DocumentSnapshot doc = await usersRef.document(user.id).get();
 
     if (!doc.exists) {
       // 2) if the user doesn't exist, then we want to take them to the create account page
@@ -93,7 +95,11 @@ class _HomeState extends State<Home> {
         "timestamp": timestamp
 
       });
+      doc = await usersRef.document(user.id).get();
     }
+    //deserialize the firestore document into user model and use throughout the webview
+    currentuser =  User.fromDocument(doc);
+    print(currentuser.username);
   }
 
   login() async{
@@ -172,9 +178,9 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(
             icon: Icon(Icons.whatshot),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.pin_drop),
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.pin_drop),
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications_active),
           ),
