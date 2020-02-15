@@ -1,4 +1,6 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttershare/models/user.dart';
@@ -14,7 +16,9 @@ import 'dart:io';
 import 'create_account.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
+final StorageReference storageRef = FirebaseStorage.instance.ref();
 final usersRef = Firestore.instance.collection('users');
+final postsRef = Firestore.instance.collection('posts');
 final DateTime timestamp = DateTime.now();
 User currentuser; //we can all user data and pass to all pages
 
@@ -98,7 +102,10 @@ class _HomeState extends State<Home> {
       doc = await usersRef.document(user.id).get();
     }
     //deserialize the firestore document into user model and use throughout the webview
-    currentuser =  User.fromDocument(doc);
+    setState(() {
+      currentuser =  User.fromDocument(doc);
+    });
+    
     print(currentuser.username);
   }
 
@@ -162,7 +169,7 @@ class _HomeState extends State<Home> {
           // Maproute(),
           Timeline(),
           ActivityFeed(),
-          Upload(),
+          Upload(currentUser: currentuser),
           Search(),
           Profile(),
         ],
