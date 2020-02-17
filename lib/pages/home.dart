@@ -33,6 +33,7 @@ class _HomeState extends State<Home> {
   PageController pageController;
   int pageIndex = 0;
   bool internetStatus = false;
+  String testVar = 'homevar tester';
 
   //generate unique key for widget
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
