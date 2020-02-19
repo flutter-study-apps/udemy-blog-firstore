@@ -161,10 +161,10 @@ class _HomeState extends State<Home> {
 
   Scaffold buildAuthScreen() {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: logout,
-        child: Icon(Icons.exit_to_app),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: logout,
+      //   child: Icon(Icons.exit_to_app),
+      // ),
       body: PageView(
         children: <Widget>[
           // Maproute(),
@@ -172,7 +172,7 @@ class _HomeState extends State<Home> {
           ActivityFeed(),
           Upload(currentUser: currentuser),
           Search(),
-          Profile(),
+          Profile(profiId: currentuser.id,),
         ],
         controller: pageController,
         onPageChanged: onPageChanged(pageIndex),
