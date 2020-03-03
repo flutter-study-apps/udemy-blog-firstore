@@ -113,7 +113,7 @@ class _ProfileState extends State<Profile> {
       future: usersRef.document(widget.profiId).get(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return CircularProgressIndicator();
+          return LinearProgressIndicator();
         }
 
         User user = User.fromDocument(snapshot.data);
