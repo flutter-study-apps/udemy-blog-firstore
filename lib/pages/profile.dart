@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttershare/models/user.dart';
 import 'package:fluttershare/widgets/header.dart';
 import 'package:fluttershare/widgets/post.dart';
+import 'package:fluttershare/widgets/post_tile.dart';
 import 'package:fluttershare/widgets/progress.dart';
 
 import 'edit_profile.dart';
@@ -18,29 +20,33 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final String currentUserId = currentuser ?.id; //ask if there is a current user, if true, it will return the property id
+  final String currentUserId = currentuser
+      ?.id; //ask if there is a current user, if true, it will return the property id
+  String postOrientation = "grid";
   bool isLoading = false;
   int postCount = 0;
   List<Post> posts = [];
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    getProfilePosts();
-
+    // getProfilePosts();
   }
 
-  getProfilePosts()async{
+  getProfilePosts() async {
     setState(() {
       isLoading = true;
     });
 
-    QuerySnapshot snapshot =  await postsRef.document(widget.profiId).collection('userPosts').orderBy('timestamp', descending: true).getDocuments();
+    QuerySnapshot snapshot = await postsRef
+        .document(widget.profiId)
+        .collection('userPosts')
+        .orderBy('timestamp', descending: true)
+        .getDocuments();
     setState(() {
-      
-      isLoading=false;
+      isLoading = false;
       postCount = snapshot.documents.length;
-       posts= snapshot.documents.map((doc)=>Post.fromDocument(doc)).toList();
+      posts = snapshot.documents.map((doc) => Post.fromDocument(doc)).toList();
     });
   }
 
@@ -183,13 +189,87 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  buildProfilePosts(){
-    if(isLoading){
+  buildProfilePosts() {
+    if (isLoading) {
       return circularProgress();
-    }
-    return Column(
-      children:posts,
+    } else if (posts.isEmpty){
 
+
+
+    return Container(
+      color: Theme.of(context).accentColor.withOpacity(0.6),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          SvgPicture.asset('assets/images/no_content.svg', height: 260.0),
+          Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Text(
+                "No Posts",
+                style: TextStyle(color: Colors.redAccent, fontSize: 40.0,fontWeight: FontWeight.bold),
+              )),
+        ],
+      ),
+    );
+  
+
+
+
+
+
+
+
+
+
+
+    } else if (postOrientation=="grid") {
+      List<GridTile> gridTiles = [];
+      posts.forEach((post) {
+        gridTiles.add(GridTile(
+          child: PostTile(post),
+        ));
+      });
+
+      return GridView.count(
+        crossAxisCount: 3,
+        childAspectRatio: 1.0,
+        mainAxisSpacing: 1.5,
+        crossAxisSpacing: 1.5,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        children: gridTiles,
+      );
+
+
+    } else if(postOrientation=="list"){
+            return Column(
+        children:posts,
+
+      );
+    }
+  }
+
+  setPostOrientation(String postOrientation){
+    setState(() {
+      this.postOrientation = postOrientation;
+    });
+  }
+
+  buildTogglePostOrientation() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        IconButton(
+          icon: Icon(Icons.grid_on),
+          color: postOrientation=="grid"? Theme.of(context).primaryColor: Colors.grey,
+          onPressed:()=> setPostOrientation("grid"),
+        ),
+        IconButton(
+          icon: Icon(Icons.list),
+          color: postOrientation=="list"? Theme.of(context).primaryColor: Colors.grey,
+          onPressed: ()=>setPostOrientation("list"),
+        )
+      ],
     );
   }
 
@@ -200,12 +280,11 @@ class _ProfileState extends State<Profile> {
         body: ListView(
           children: <Widget>[
             buildProfileHeader(),
-            Divider(
-              height: 0.0
-            ),
+            Divider(),
+            buildTogglePostOrientation(),
+            Divider(height: 0.0),
             buildProfilePosts(),
-
           ],
-        )); 
+        ));
   }
 }
