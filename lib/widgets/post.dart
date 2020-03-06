@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttershare/models/user.dart';
+import 'package:fluttershare/pages/comments.dart';
 import 'package:fluttershare/pages/home.dart';
 import 'package:fluttershare/widgets/custom_image.dart';
 import 'package:fluttershare/widgets/progress.dart';
@@ -17,7 +18,6 @@ class Post extends StatefulWidget {
   final String description;
   final String mediaUrl;
   final dynamic likes;
-  
 
   Post({
     this.postId,
@@ -77,7 +77,7 @@ class _PostState extends State<Post> {
   final String location;
   final String description;
   final String mediaUrl;
-  bool showHeart  = false;
+  bool showHeart = false;
   int likeCount;
   Map likes;
   bool isLiked;
@@ -152,13 +152,11 @@ class _PostState extends State<Post> {
         showHeart = true;
         likes[currentUserId] = true;
       });
-      Timer(
-        Duration(milliseconds: 500),
-        (){
-          setState(() {
-            showHeart=false;
-          });
+      Timer(Duration(milliseconds: 500), () {
+        setState(() {
+          showHeart = false;
         });
+      });
     }
   }
 
@@ -169,20 +167,24 @@ class _PostState extends State<Post> {
         alignment: Alignment.center,
         children: <Widget>[
           cachedNetworkImage(mediaUrl),
-          showHeart? 
-          Animator(
-            duration: Duration(
-              milliseconds: 300,
-            ),
-            tween: Tween(begin: .08, end:1.4),
-            curve: Curves.elasticOut,
-            cycles: 0,
-            builder: (anim)=>Transform.scale(
-              scale: anim.value,
-              child: Icon(Icons.favorite, size: 80, color: Colors.red,),
-            ),
-          )
-           : Text(''),
+          showHeart
+              ? Animator(
+                  duration: Duration(
+                    milliseconds: 300,
+                  ),
+                  tween: Tween(begin: .08, end: 1.4),
+                  curve: Curves.elasticOut,
+                  cycles: 0,
+                  builder: (anim) => Transform.scale(
+                    scale: anim.value,
+                    child: Icon(
+                      Icons.favorite,
+                      size: 80,
+                      color: Colors.red,
+                    ),
+                  ),
+                )
+              : Text(''),
         ],
       ),
     );
@@ -205,7 +207,12 @@ class _PostState extends State<Post> {
             ),
             Padding(padding: EdgeInsets.only(right: 20.0)),
             GestureDetector(
-              onTap: () => print('showing comments'),
+              onTap: () => showComments(
+                context,
+                postId: postId,
+                ownerId: ownerId,
+                mediaUrl: mediaUrl,
+              ),
               child: Icon(
                 Icons.chat,
                 size: 28.0,
@@ -259,6 +266,20 @@ class _PostState extends State<Post> {
         buildPostImage(),
         buildPostFooter()
       ],
+    );
+  }
+
+  showComments(BuildContext context,
+      {String postId, String ownerId, String mediaUrl}) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return Comments(
+          postId: postId,
+          postOwnerId: ownerId,
+          postMediaUrl: mediaUrl,
+        );
+      }),
     );
   }
 }
