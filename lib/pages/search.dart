@@ -11,7 +11,6 @@ class Search extends StatefulWidget {
   _SearchState createState() => _SearchState();
 }
 
-//Class for searching
 class _SearchState extends State<Search> {
   TextEditingController searchController = TextEditingController();
   Future<QuerySnapshot> searchResultsFuture;
@@ -35,7 +34,7 @@ class _SearchState extends State<Search> {
       title: TextFormField(
         controller: searchController,
         decoration: InputDecoration(
-          hintText: "Search for user...",
+          hintText: "Search for a user...",
           filled: true,
           prefixIcon: Icon(
             Icons.account_box,
@@ -52,9 +51,7 @@ class _SearchState extends State<Search> {
   }
 
   Container buildNoContent() {
-    //get the orientation of the device, landscape or portrait
-    final orientation = MediaQuery.of(context).orientation;
-
+    final Orientation orientation = MediaQuery.of(context).orientation;
     return Container(
       child: Center(
         child: ListView(
@@ -62,17 +59,18 @@ class _SearchState extends State<Search> {
           children: <Widget>[
             SvgPicture.asset(
               'assets/images/search.svg',
-              height: orientation == Orientation.portrait ? 300.0 : 200,
+              height: orientation == Orientation.portrait ? 300.0 : 200.0,
             ),
             Text(
-              "Find users",
+              "Find Users",
               textAlign: TextAlign.center,
               style: TextStyle(
+                color: Colors.white,
                 fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.w600,
                 fontSize: 60.0,
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -92,7 +90,9 @@ class _SearchState extends State<Search> {
           UserResult searchResult = UserResult(user);
           searchResults.add(searchResult);
         });
-        return ListView(children: searchResults);
+        return ListView(
+          children: searchResults,
+        );
       },
     );
   }
@@ -108,7 +108,6 @@ class _SearchState extends State<Search> {
   }
 }
 
-//Clas for showing the result
 class UserResult extends StatelessWidget {
   final User user;
 
@@ -116,9 +115,8 @@ class UserResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Text("User Result");
     return Container(
-      color: Theme.of(context).primaryColor.withOpacity(.7),
+      color: Theme.of(context).primaryColor.withOpacity(0.7),
       child: Column(
         children: <Widget>[
           GestureDetector(
@@ -130,23 +128,19 @@ class UserResult extends StatelessWidget {
               ),
               title: Text(
                 user.displayName,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
                 user.username,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ),
           Divider(
             height: 2.0,
             color: Colors.white54,
-          )
+          ),
         ],
       ),
     );

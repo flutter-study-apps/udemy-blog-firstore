@@ -6,17 +6,16 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // check if user is logged in
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FlutterShare',
       debugShowCheckedModeBanner: false,
-      home: Home(),
       theme: ThemeData(
-        // primaryColor: Colors.purple.withGreen(20),
+        primarySwatch: Colors.deepPurple,
         accentColor: Colors.teal,
       ),
+      home: Home(),
     );
   }
 }
