@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttershare/models/user.dart';
-import 'package:fluttershare/pages/timeline.dart';
+import 'package:fluttershare/pages/home.dart';
 import 'package:fluttershare/widgets/custom_image.dart';
 import 'package:fluttershare/widgets/progress.dart';
 
@@ -14,6 +14,7 @@ class Post extends StatefulWidget {
   final String description;
   final String mediaUrl;
   final dynamic likes;
+  
 
   Post(
     {this.postId,
@@ -73,6 +74,10 @@ class _PostState extends State<Post> {
   final String location;
   final String description;
   final String mediaUrl;
+<<<<<<< HEAD
+=======
+  bool showHeart  = false;
+>>>>>>> parent of f523068... Finished Real time messaging and comment
   int likeCount;
   Map likes;
 
@@ -121,7 +126,47 @@ class _PostState extends State<Post> {
     );
   }
 
+<<<<<<< HEAD
   buildPostImage(){
+=======
+  handleLikePost() {
+    bool _isLiked = likes[currentUserId] == true;
+
+    if (_isLiked) {
+      postsRef
+          .document(ownerId)
+          .collection('userPosts')
+          .document(postId)
+          .updateData({'likes.$currentUserId': false});
+      setState(() {
+        likeCount -= 1;
+        isLiked = false;
+        likes[currentUserId] = false;
+      });
+    } else if (!_isLiked) {
+      postsRef
+          .document(ownerId)
+          .collection('userPosts')
+          .document(postId)
+          .updateData({'likes.$currentUserId': true});
+      setState(() {
+        likeCount += 1;
+        isLiked = true;
+        showHeart = true;
+        likes[currentUserId] = true;
+      });
+      Timer(
+        Duration(milliseconds: 500),
+        (){
+          setState(() {
+            showHeart=false;
+          });
+        });
+    }
+  }
+
+  buildPostImage() {
+>>>>>>> parent of f523068... Finished Real time messaging and comment
     return GestureDetector(
       onDoubleTap: ()=>print('liking post'),
       child: Stack(
@@ -129,6 +174,23 @@ class _PostState extends State<Post> {
         children: <Widget>[
           // Image.network(mediaUrl),
           cachedNetworkImage(mediaUrl),
+<<<<<<< HEAD
+=======
+          showHeart? 
+          Animator(
+            duration: Duration(
+              milliseconds: 300,
+            ),
+            tween: Tween(begin: .08, end:1.4),
+            curve: Curves.elasticOut,
+            cycles: 0,
+            builder: (anim)=>Transform.scale(
+              scale: anim.value,
+              child: Icon(Icons.favorite, size: 80, color: Colors.red,),
+            ),
+          )
+           : Text(''),
+>>>>>>> parent of f523068... Finished Real time messaging and comment
         ],
       ),
     );
@@ -137,6 +199,7 @@ class _PostState extends State<Post> {
   buildPostFooter(){
     return Column(
       children: <Widget>[
+<<<<<<< HEAD
          Row(
            mainAxisAlignment: MainAxisAlignment.start,
            children: <Widget>[
@@ -164,6 +227,35 @@ class _PostState extends State<Post> {
            children: <Widget>[
              Container(
                margin: EdgeInsets.only(left:20),
+=======
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Padding(padding: EdgeInsets.only(top: 40.0, left: 20.0)),
+            GestureDetector(
+              onTap: handleLikePost,
+              child: Icon(
+                isLiked ? Icons.favorite : Icons.favorite_border,
+                size: 28.0,
+                color: Colors.pink,
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(right: 20.0)),
+            GestureDetector(
+              onTap: () => print('showing comments'),
+              child: Icon(
+                Icons.chat,
+                size: 28.0,
+                color: Colors.blue[900],
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(left: 20.0),
+>>>>>>> parent of f523068... Finished Real time messaging and comment
               child: Text(
                 "$likeCount likes",
                 style: TextStyle(
