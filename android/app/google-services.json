@@ -15,35 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "885612503805-lfjkkkud80dhludpaevo0q2ef647mvh0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.digitapps.bloggingapp",
-            "certificate_hash": "7de0df6b9829490ffb4363a22ce5a70905c79605"
-          }
-        },
-        {
-          "client_id": "885612503805-p54vt5lmboi8ai9gr2as4hnggcd0cr9a.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.digitapps.bloggingapp",
-            "certificate_hash": "a0c07bc6ad163f5fc5e4e7baf152743980974eb4"
-          }
-        },
-        {
-          "client_id": "885612503805-80iti5175f20a9gfbk05u3lgk8m7t52u.apps.googleusercontent.com",
+          "client_id": "885612503805-f04jdmb5huetj8fvl3mn4asl50962i2u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.digitapps.bloggingapp",
             "certificate_hash": "146ae3e693ca1f187e433f7a484b8e8a16aa80ec"
-          }
-        },
-        {
-          "client_id": "885612503805-ufsc5k3rfv64l8dis0t6lut0uu7v68h9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.digitapps.bloggingapp",
-            "certificate_hash": "5dfe392b748522c0da684d44b7eb330785367948"
           }
         },
         {
